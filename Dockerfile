@@ -1,10 +1,10 @@
-FROM alpine:3.12
+FROM alpine
 
-ENV LANG C.UTF-8
-ENV VPN_ENABLE 1
-ENV SCOKS5_ENABLE 0
-ENV SCOKS5_FORKS 2
-ENV SCOKS5_START_DELAY 5
+ENV LANG=C.UTF-8
+ENV VPN_ENABLE=1
+ENV SCOKS5_ENABLE=1
+ENV SCOKS5_FORKS=2
+ENV SCOKS5_START_DELAY=5
 
 RUN set -x && \
     apk add --no-cache \
@@ -28,7 +28,7 @@ COPY options.l2tpd.client /etc/ppp/options.l2tpd.client
 # Socks5 Files
 COPY sockd.conf /etc/sockd.conf
 # Scripts
-COPY startup.sh /
-COPY reconnector.sh /
+COPY --chmod=755 startup.sh /
+COPY --chmod=755 reconnector.sh /
 
 CMD ["/startup.sh"]
